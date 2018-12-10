@@ -73,7 +73,7 @@ public class TransactionService extends AbstractService {
                             .flatMap(ethGetTransactionCount -> {
                                 Transaction tx = Transaction.createEtherTransaction(fromAddress,
                                         ethGetTransactionCount.getTransactionCount(),
-                                        BigInteger.valueOf(0),
+                                        BigInteger.ZERO,
                                         DEFAULT_GAS_LIMIT,
                                         toAddress,
                                         BigInteger.valueOf(value));

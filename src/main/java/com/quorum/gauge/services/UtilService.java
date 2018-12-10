@@ -22,8 +22,12 @@ package com.quorum.gauge.services;
 import com.quorum.gauge.common.QuorumNode;
 import org.springframework.stereotype.Service;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
+import org.web3j.protocol.core.methods.response.EthBlock;
 import org.web3j.protocol.core.methods.response.EthBlockNumber;
 import rx.Observable;
+
+import java.math.BigInteger;
 
 @Service
 public class UtilService extends AbstractService {
@@ -35,5 +39,15 @@ public class UtilService extends AbstractService {
     public Observable<EthBlockNumber> getCurrentBlockNumberFrom(QuorumNode node) {
         Web3j client = connectionFactory().getWeb3jConnection(node);
         return client.ethBlockNumber().observable();
+    }
+
+    public Observable<EthBlock> getBlock(QuorumNode node, BigInteger blockNumber) {
+        Web3j client = connectionFactory().getWeb3jConnection(node);
+        return client.ethGetBlockByNumber(DefaultBlockParameter.valueOf(blockNumber), false).observable();
+    }
+
+    public Observable<EthBlock> getBlock(QuorumNode node, String block) {
+        Web3j client = connectionFactory().getWeb3jConnection(node);
+        return client.ethGetBlockByNumber(DefaultBlockParameter.valueOf(block), false).observable();
     }
 }
