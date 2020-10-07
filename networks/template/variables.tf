@@ -2,6 +2,11 @@
 
 variable "network_name" {}
 variable "consensus" {}
+
+variable "gas_price_enabled" {
+  default     = "false"
+}
+
 variable "output_dir" {
   default = "/tmp"
 }
@@ -34,7 +39,8 @@ variable "exclude_initial_nodes" {
 
 variable "quorum_docker_image" {
   type        = object({ name = string, local = bool })
-  default     = { name = "quorumengineering/quorum:latest", local = false }
+  //TEMPORARY  default     = { name = "quorumengineering/quorum:latest", local = false }
+  default     = { name = "satpalsandhu/quorum:myquorum", local = true }   //TEMPORARY - for testing against my PR
   description = "Local=true indicates that the image is already available locally and don't need to pull from registry"
 }
 

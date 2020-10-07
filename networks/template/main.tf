@@ -44,6 +44,7 @@ module "network" {
   source = "../_modules/ignite"
 
   concensus             = module.helper.consensus
+  gas_price_enabled     = var.gas_price_enabled
   network_name          = var.network_name
   geth_networking       = module.helper.geth_networking
   tm_networking         = module.helper.tm_networking

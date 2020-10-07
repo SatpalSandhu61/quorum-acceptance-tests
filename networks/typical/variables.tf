@@ -2,6 +2,11 @@ variable "consensus" {
   default = "istanbul"
 }
 
+variable "gas_price_enabled" {
+  default     = "false"
+  description = "Gas price enabled in the network. Supported values are: true and false"
+}
+
 variable "network_name" {
   default = "typical"
 }
