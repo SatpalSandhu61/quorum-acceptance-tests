@@ -36,6 +36,12 @@ variable "concensus" {
   description = "Consensus algorithm being used in the network. Supported values are: istanbul and raft"
 }
 
+variable "privacy_enhancements" {
+    type        = object({ block = number, enabled = bool })
+    default     = { block = 0, enabled = false }
+    description = "privacy enhancements state (enabled/disabled) and the block height at which they are enabled"
+}
+
 variable "gas_price_enabled" {
   default     = "false"
   description = "Gas price enabled in the network. Supported values are: true and false"

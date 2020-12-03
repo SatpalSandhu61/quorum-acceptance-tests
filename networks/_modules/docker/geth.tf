@@ -108,7 +108,13 @@ EOF
     content    = <<EOF
 #!/bin/sh
 
+if [ -f /data/qdata/cleanStorage ]; then
+  echo "Cleaning geth storage"
+  rm -rf /data/qdata/geth /data/qdata/quorum-raft-state /data/qdata/raft-snap /data/qdata/raft-wal /data/qdata/cleanStorage
+fi
+
 geth --datadir ${local.container_geth_datadir} init ${local.container_geth_datadir}/genesis.json
+
 #exit if geth init fails
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 

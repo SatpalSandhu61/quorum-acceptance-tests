@@ -31,7 +31,7 @@ module "helper" {
   }
   tessera = {
     container = {
-      image = { name = "quorumengineering/tessera:latest", local = false }
+      image = var.tessera_docker_image
       port  = { thirdparty = 9080, p2p = 9000 }
     }
     host = {
@@ -44,6 +44,7 @@ module "network" {
   source = "../_modules/ignite"
 
   concensus             = module.helper.consensus
+  privacy_enhancements  = var.privacy_enhancements
   gas_price_enabled     = var.gas_price_enabled
   network_name          = var.network_name
   geth_networking       = module.helper.geth_networking

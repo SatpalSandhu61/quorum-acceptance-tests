@@ -89,6 +89,9 @@ resource "local_file" "genesis-file" {
       "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "eip158Block": 0,
       "isQuorum": true,
+%{if var.privacy_enhancements.enabled ~}
+      "privacyEnhancementsBlock": ${var.privacy_enhancements.block},
+%{endif~}
 %{if var.gas_price_enabled ~}
       "enableGasPrice": true,
 %{endif~}
@@ -142,9 +145,9 @@ resource "local_file" "passwords" {
 }
 
 resource "local_file" "genesisfile" {
-  count    = local.number_of_nodes
-  filename = format("%s/%s", quorum_bootstrap_data_dir.datadirs-generator[count.index].data_dir_abs, local.genesis_file)
-  content  = quorum_bootstrap_data_dir.datadirs-generator[count.index].genesis
+    count    = local.number_of_nodes
+    filename = format("%s/%s", quorum_bootstrap_data_dir.datadirs-generator[count.index].data_dir_abs, local.genesis_file)
+    content  = quorum_bootstrap_data_dir.datadirs-generator[count.index].genesis
 }
 
 resource "local_file" "tmconfigs-generator" {
@@ -200,7 +203,13 @@ resource "local_file" "tmconfigs-generator" {
       "passwords": [],
       "keyData": [${data.null_data_source.meta[count.index].inputs.tmKeys}]
     },
-    "alwaysSendTo": []
+    "alwaysSendTo": [],
+    "features" : {
+%{if var.privacy_enhancements.enabled ~}
+      "enablePrivacyEnhancements" : "true",
+%{endif~}
+      "enableRemoteKeyValidation" : "true"
+    }
 }
 JSON
 }
